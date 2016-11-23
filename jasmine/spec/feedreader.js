@@ -71,11 +71,11 @@ $(function() {
           * clicked and does it hide when clicked again.
           */
           it('The menu displays when it is clicked, and hide when clicked again', function() {
-            expect($("body").hasClass('menu-hidden')).toBe(true);
+            expect($("body").hasClass('menu-hidden')).toBeTruthy();
             $('.menu-icon-link').trigger( "click" );
-            expect($("body").hasClass('menu-hidden')).toBe(false);
+            expect($("body").hasClass('menu-hidden')).toBeFalsy();
             $('.menu-icon-link').trigger( "click" );
-            expect($("body").hasClass('menu-hidden')).toBe(true);
+            expect($("body").hasClass('menu-hidden')).toBeTruthy();
           });
       });
 
@@ -94,7 +94,6 @@ $(function() {
          */
         it('After loadFeed there is at least a single .entry in the .feed container', function() {
             var entries = $('.feed .entry');
-            expect(entries.length).toBeGreaterThan(0); // at least 1
             expect(entries[0]).toBeDefined();
         });
     });
