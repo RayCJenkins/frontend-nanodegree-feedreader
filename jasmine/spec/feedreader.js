@@ -99,29 +99,36 @@ $(function() {
 
     /* Write a new test suite named "New Feed Selection"*/
     describe('New Feed Selection', function() {
-        //Start the  index at -1 so that the firt spec loads index 0, and the second spec loads index 1
-        var index = -1;
-        var firstEntryText;
+        var firstEntry, secondEntry;
         beforeEach(function(done) {
-            index = index + 1;
-            loadFeed(index, done);
-        });
+            loadFeed(0, function() {
+                firstEntry = $('.feed .entry');
+                loadFeed(1, function() {
+                    secondEntry = $('.feed .entry');
+                    done(); 
+                });
+            });
 
+        }); 
 
         /* Write a test that ensures when a new feed is loaded
          * by the loadFeed function that the content actually changes.
          * Remember, loadFeed() is asynchronous.
          */
-        it('loads text from the entry feed for index 0', function() {
-            firstEntryText = $('.entry-link').first().text();
-            expect(firstEntryText.length).toBeGreaterThan(0);
-            console.log(firstEntryText);
+        it('loads different entries when new feed is loaded', function() {
+            expect(firstEntry).toBeDefined();
+            expect(secondEntry).toBeDefined();
+            var feedsAreDifferent = firstEntry.length != secondEntry.length;
+            if (!feedsAreDifferent) {
+                for(var i = 0; i < firstEntry.length; i++){
+                    if (!firstEntry[i].isEqualNode(secondEntry[i])) {
+                        feedsAreDifferent = true;
+                        break;
+                    }
+                }
+            }
+            expect(feedsAreDifferent).toBe(true);
         });
-
-        it('loads different text for the next index', function () {
-
-            expect($('.entry-link').first().text()).not.toBe(firstEntryText);
-        })
     });
 
 }());
