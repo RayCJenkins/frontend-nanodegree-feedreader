@@ -93,7 +93,9 @@ $(function() {
          * the use of Jasmine's beforeEach and asynchronous done() function.
          */
         it('After loadFeed there is at least a single .entry in the .feed container', function() {
-            expect($('.feed .entry').length).toBeGreaterThan(0); // at least 1
+            var entries = $('.feed .entry');
+            expect(entries.length).toBeGreaterThan(0); // at least 1
+            expect(entries[0]).toBeDefined();
         });
     });
 
